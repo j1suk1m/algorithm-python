@@ -8,14 +8,14 @@ def bfs(start):
     
     while queue:
         node, distance = queue.popleft()
-        
+
         if distance == K:
             result.append(node)
-        
-        for next in graph[node]:
-            if not visited[next]:
-                queue.append((next, distance + 1))
-                visited[next] = True
+        else:
+            for next in graph[node]:
+                if not visited[next]:
+                    queue.append((next, distance + 1))
+                    visited[next] = True
                 
     return result
         
