@@ -18,7 +18,7 @@ for _ in range(T):
     result = 0
     
     for i in range(1, N + 1):
-        if (dfs(i) == i):
+        if not visited[i] and dfs(i) == i:
             result += 1
             
     print(result)
