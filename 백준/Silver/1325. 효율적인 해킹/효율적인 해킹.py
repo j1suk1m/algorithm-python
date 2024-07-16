@@ -19,7 +19,7 @@ def bfs(node):
     
 N, M = map(int, stdin.readline().rstrip().split())
 graph = [[] for _ in range(N + 1)]
-answers = []
+answers = deque()
 count = -1
 
 for _ in range(M):
@@ -31,11 +31,11 @@ for node in range(1, N + 1):
     search_result = bfs(node)
     
     if search_result > count:
-        answers = [node]
+        answers = deque([node])
         count = search_result
     elif search_result == count:
         answers.append(node)
 
-answers.sort()
+answers = list(sorted(answers))
             
 print(" ".join(list(map(str, answers))))
