@@ -1,4 +1,4 @@
 from sys import stdin
 
-print(int(stdin.readline().rstrip()))
+print(stdin.readline().rstrip())
 print(1)
