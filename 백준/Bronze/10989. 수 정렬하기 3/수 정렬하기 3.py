@@ -8,8 +8,12 @@ for _ in range(N):
     number = int(stdin.readline().rstrip())
     number_dict[number] += 1
     
-number_dict = sorted(number_dict.items())
-
-for key, value in number_dict:
-    for _ in range(value):
-        print(key)
+for number in range(1, 10001):
+    if N <= 0:
+        break
+    
+    if number_dict[number] > 0:
+        for _ in range(number_dict[number]):
+            print(number)
+    
+        N -= 1
