@@ -2,7 +2,7 @@ from sys import stdin
 
 def binary_search(Z):
     start = 1
-    end = 1000000000
+    end = X
     answer = -1
     
     while start <= end:
@@ -19,4 +19,7 @@ def binary_search(Z):
 X, Y = map(int, stdin.readline().rstrip().split())
 Z = (Y * 100) // X ### 현재 승률
     
-print(binary_search(Z))
+if Z >= 99: ### 추가 게임을 하더라도 승률이 변하지 않는 경우
+    print(-1)
+else:
+    print(binary_search(Z))
