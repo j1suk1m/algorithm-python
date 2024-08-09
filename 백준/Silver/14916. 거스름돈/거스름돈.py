@@ -1,22 +1,24 @@
 from sys import stdin
 
 def dynamic_programming(money: int) -> int:
-    coins = [100000] * (money + 1)
+    dp = [100000] * (money + 1)
     
-    for i in range(2, money + 1):
-        coins[i] = coins[i - 2] + 1
-        
-        if i % 5 == 0:
-            coins[i] = min(coins[i], i // 5)
-        if i % 2 == 0:
-            coins[i] = min(coins[i], i // 2)
-        if i >= 5:
-            coins[i] = min(coins[i], coins[i - 5] + 1)
-            
-    answer = coins[money] if coins[money] < 100000 else -1
+    dp[2] = 1
+    dp[4] = 2
+    dp[5] = 1
     
-    return answer
+    for coin in range(6, money + 1):
+        dp[coin] = min(dp[coin - 2], dp[coin - 5]) + 1
+
+    return dp[money] if dp[money] < 100000 else -1
             
 n = int(stdin.readline().rstrip())
 
-print(dynamic_programming(n))
+if n == 1 or n == 3:
+    print(-1)
+elif n == 2 or n == 5:
+    print(1)
+elif n == 4:
+    print(2)
+else:
+    print(dynamic_programming(n))
