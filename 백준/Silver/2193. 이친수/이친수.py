@@ -1,19 +1,17 @@
 from sys import stdin
 
 def dynamic_programming(N: int) -> int:
-    dp = [[0, 0] for _ in range(N + 1)] ### [0으로 끝나는 이친수의 개수, 1로 끝나는 이친수의 개수]의 리스트
+    dp = [0] * (N + 1) 
     
-    dp[1] = [0, 1]
-    dp[2] = [1, 0]
+    dp[1] = 1
+    dp[2] = 1
 
     for number in range(3, N + 1):
-        ### 0으로 끝나는 n - 1자리 이친수 -> n자리일 때 0으로도 1로도 끝날 수 있음
-        ### 1로 끝나는 n - 1자리 이친수 -> n자리일 때 0으로만 끝날 수 있음
-        ### n - 1자리 이친수의 개수 == n자리 이친수 중 0으로 끝나는 것의 개수
-        ### n - 1자리 이친수 중 0으로 끝나는 것의 개수 == n자리 이친수 중 1로 끝나는 것의 개수
-        dp[number] = [sum(dp[number - 1]), dp[number - 1][0]]
+        ### 마지막 숫자가 0일 경우 N - 1자리 이친수의 개수와 동일
+        ### 마지막 숫자가 1일 경우 그 앞 숫자는 0으로 고정되므로 N - 2자리 이친수의 개수와 동일
+        dp[number] = dp[number - 1] + dp[number - 2] 
         
-    return sum(dp[N])
+    return dp[N]
 
 N = int(stdin.readline().rstrip())
 
