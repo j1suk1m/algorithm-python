@@ -11,8 +11,8 @@ N = int(input())
 graph = [[0] * 26 for _ in range(26)]
 
 for _ in range(N):
-    premise = input().split()
-    graph[get_index(premise[0])][get_index(premise[2])] = 1
+    p, q = input().split(" is ")
+    graph[get_index(p)][get_index(q)] = 1
                 
 ### 플로이드 워셜 알고리즘 
 for k in range(26):
@@ -24,9 +24,9 @@ for k in range(26):
 M = int(input())     
 
 for _ in range(M):
-    conclusion = input().split()
+    p, q = input().split(" is ")
     
-    if graph[get_index(conclusion[0])][get_index(conclusion[2])] == 1:
+    if graph[get_index(p)][get_index(q)] == 1:
         print("T")
     else:
         print("F")
