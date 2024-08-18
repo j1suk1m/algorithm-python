@@ -12,14 +12,15 @@ def find_root(node: int) -> int:
 
 N = int(input())
 graph = []
-cost = [[0]] + [([0] + list(map(int, input().split()))) for _ in range(N)]
 root = [node for node in range(N + 1)]
 answer = 0
 
 ### 연결 관계 저장
-for x in range(1, N):
+for x in range(1, N + 1):
+    cost = [0] + list(map(int, input().split()))
+    
     for y in range(x + 1, N + 1):
-        graph.append((x, y, cost[x][y]))
+        graph.append((x, y, cost[y]))
 
 ### 비용에 대하여 오름차순 정렬      
 graph = sorted(graph, key=lambda x: x[2])
