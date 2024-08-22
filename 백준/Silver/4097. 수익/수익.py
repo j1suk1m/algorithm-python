@@ -10,11 +10,9 @@ while True:
     elif N == 1:
         print(int(input()))
     else:
-        P = [0] + list(int(input()) for _ in range(N))
-        dp = [0] * (N + 1)
-        dp[1] = P[1]
+        P = list(int(input()) for _ in range(N))
         
-        for day in range(2, N + 1):
-            dp[day] = max(P[day], P[day] + dp[day - 1])
+        for day in range(1, N):
+            P[day] = max(P[day], P[day] + P[day - 1])
             
-        print(max(dp[1:]))
+        print(max(P))
