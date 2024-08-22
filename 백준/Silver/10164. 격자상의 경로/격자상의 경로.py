@@ -1,5 +1,7 @@
 from sys import stdin
 
+input = lambda: stdin.readline().rstrip()
+
 ### 다이나믹 프로그래밍
 def get_path_count(end_x: int, end_y: int) -> int:
     start_x, start_y = 1, 1
@@ -13,16 +15,21 @@ def get_path_count(end_x: int, end_y: int) -> int:
             
     return graph[end_x][end_y]
 
-input = lambda: stdin.readline().rstrip()
-
 N, M, K = map(int, input().split())
-mandatory_point = (K // M + 1, K - (K // M) * M) ### 동그라미로 표시된 칸의 좌표
 answer = 1
 
 if K == 0:
     end_points = [(N, M)]
 else:
-    end_points = [mandatory_point, (N - mandatory_point[0] + 1, M - mandatory_point[1] + 1)]
+    mandatory_point = ((K - 1) // M + 1, K - ((K - 1) // M * M)) ### 동그라미로 표시된 칸의 좌표
+    mandatory_x, mandatory_y = mandatory_point
+
+    if mandatory_x == 1 or mandatory_y == 1:
+        end_points = [(N - mandatory_x + 1, M - mandatory_y + 1)]
+    elif mandatory_x == N or mandatory_y == M:
+        end_points = [mandatory_point]
+    else:
+        end_points = [mandatory_point, (N - mandatory_x + 1, M - mandatory_y + 1)]
 
 for end_x, end_y in end_points:
     graph = [[0] * (end_y + 1) for _ in range(end_x + 1)]
