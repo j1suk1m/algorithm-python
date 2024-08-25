@@ -5,9 +5,9 @@ input = lambda: stdin.readline().rstrip()
 N, M = map(int, input().split())
 A = set(map(int, input().split()))
 B = set(map(int, input().split()))
+difference_set = A - B
 
-length = len(A - B)
-print(length)
+print(len(difference_set))
 
-if length:
-    print(*sorted(A - B))
+if len(difference_set):
+    print(*sorted(difference_set))
