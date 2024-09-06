@@ -1,5 +1,6 @@
-from sys import stdin
+from sys import stdin, setrecursionlimit
 
+setrecursionlimit(10 ** 6)
 input = lambda: stdin.readline().rstrip()
 
 ### 입력: 노드 번호
