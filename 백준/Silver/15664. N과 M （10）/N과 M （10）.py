@@ -21,8 +21,7 @@ def back_tracking(count: int):
             sequence_indexes[count] = index
             back_tracking(count + 1)
             sequence_indexes[count] = -1
-
-            
+  
 N, M = map(int, input().split())
 numbers = sorted(list(map(int, input().split())))
 sequence_indexes = [-1] * M
