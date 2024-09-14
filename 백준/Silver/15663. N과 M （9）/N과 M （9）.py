@@ -6,23 +6,22 @@ input = lambda: stdin.readline().rstrip()
 def back_tracking(count: int):
     if count == M:
         sequence = list(map(lambda index: numbers[index], sequence_indexes))
-        sequences.append(sequence)
+        print(*sequence)
         return
     
+    ### 중복 수열 제거
+    previous = 0
+    
     for index in range(N):
-        if index not in sequence_indexes:
+        if index not in sequence_indexes and numbers[index] != previous:
+            previous = numbers[index]
             sequence_indexes[count] = index
             back_tracking(count + 1)
             sequence_indexes[count] = -1
+
             
 N, M = map(int, input().split())
-numbers = list(map(int, input().split()))
+numbers = sorted(list(map(int, input().split())))
 sequence_indexes = [-1] * M
-sequences = []
 
 back_tracking(0)
-
-sequences = sorted(set(tuple(sublist) for sublist in sequences))
-
-for sequence in sequences:
-    print(*sequence)
