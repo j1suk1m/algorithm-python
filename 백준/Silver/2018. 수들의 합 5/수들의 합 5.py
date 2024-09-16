@@ -3,19 +3,20 @@ from sys import stdin
 input = lambda: stdin.readline().rstrip()
 
 N = int(input())
-numbers = [number for number in range(1, N + 1)]
-start = 0
-end = 0
-count = 0
+start = 1
+end = 1
+current_sum = 1
+count = 1
 
-while start <= end:
-    prefix_sum = sum(numbers[start:end + 1])
-    
-    if prefix_sum >= N:
-        if prefix_sum == N:
-            count += 1
+while end < N:
+    if current_sum > N:
+        current_sum -= start
         start += 1
     else:
+        if current_sum == N:
+            count += 1
+            
         end += 1
+        current_sum += end
         
 print(count)
