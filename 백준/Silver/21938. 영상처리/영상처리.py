@@ -1,45 +1,46 @@
-from sys import stdin, setrecursionlimit
+from sys import stdin
+from collections import deque
 
-def dfs(x, y) :
-    if x < 0 or x >= N  or y < 0 or y >= M : ### 화면을 벗어나는 경우
-        return False
+input = lambda: stdin.readline().rstrip()
+
+### 너비 우선 탐색 알고리즘
+def bfs(x: int, y: int):
+    graph[x][y] = 0
+    queue = deque([(x, y)])
     
-    if graph[x][y] >= T : ### 경계값보다 크거나 같은 경우
-        graph[x][y] = 0 ### 0으로 만들어 방문 처리
+    while queue:
+        x, y = queue.popleft()
         
-        dfs(x-1, y)
-        dfs(x+1, y)
-        dfs(x, y+1)
-        dfs(x, y-1)
-        
-        return True
-    
-    return False
-
-setrecursionlimit(10 ** 6)
-
-result = 0
-graph = []
-
-N, M = map(int, stdin.readline().strip().split(" "))
-
-for _ in range (N) :
-    
-    graphRowSum = []
-    
-    graphRow = list(map(int, stdin.readline().strip().split(" ")))
-    
-    ### 3개씩 더해 평균을 낸 뒤, graph에 저장
-    for idx in range (0, len(graphRow), 3) :
-        graphRowSum.append(sum(graphRow[idx : idx + 3]) / 3)
-    
-    graph.append(graphRowSum)
-    
-T = int(stdin.readline())   
-
-for i in range (N) :
-    for j in range (M) :
-        if (dfs(i, j) == True) :
-            result += 1
+        for dx, dy in zip(dxs, dys):
+            nx = x + dx
+            ny = y + dy
             
-print(result)  
+            if not (0 <= nx < N and 0 <= ny < M):
+                continue
+            if graph[nx][ny] == 255:
+                graph[nx][ny] = 0
+                queue.append((nx, ny))
+                
+    return 1
+        
+N, M = map(int, input().split())
+RGB = list(list(map(int, input().split())) for _ in range(N))
+graph = list(list(0 for _ in range(M)) for _ in range(N))
+T = int(input())
+dxs = [-1, 1, 0, 0]
+dys = [0, 0, -1, 1]
+answer = 0
+
+for row in range(N):
+    for col in range(M):
+        pixels = sum(RGB[row][3 * col:3 * col + 3])
+        
+        if pixels >= 3 * T:
+            graph[row][col] = 255
+            
+for row in range(N):
+    for col in range(M):
+        if graph[row][col] == 255:
+            answer += bfs(row, col)
+            
+print(answer)
