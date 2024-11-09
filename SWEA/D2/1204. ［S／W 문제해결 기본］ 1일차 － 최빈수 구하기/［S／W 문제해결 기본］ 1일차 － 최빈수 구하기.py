@@ -1,16 +1,15 @@
+from collections import defaultdict
+
 results = []
 T = int(input().rstrip())
 
 for _ in range(T):
-    score_frequency = dict()
+    score_frequency = defaultdict(int)
     test_case = int(input().rstrip())
     scores = list(map(int, input().rstrip().split()))
     
     for score in scores:
-        if score in score_frequency.keys():
-            score_frequency[score] += 1
-        else:
-            score_frequency[score] = 1
+        score_frequency[score] += 1
             
     sorted_score_frequency = sorted(score_frequency.items(), key=lambda score: (-score[1], -score[0]))
     results.append(sorted_score_frequency[0][0])
