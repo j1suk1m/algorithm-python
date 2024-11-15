@@ -1,9 +1,7 @@
-from sys import stdin
+N = list(map(int, list(input())))
+is_lucky_straight = sum(N[:len(N)//2]) == sum(N[len(N)//2:])
 
-N = list(map(int, list(stdin.readline().rstrip())))
-mid = len(N) // 2
-
-if sum(N[0:mid]) == sum(N[mid:]):
+if is_lucky_straight:
     print("LUCKY")
 else:
     print("READY")
