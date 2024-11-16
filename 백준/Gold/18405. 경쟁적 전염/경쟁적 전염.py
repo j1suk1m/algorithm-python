@@ -1,52 +1,42 @@
 from sys import stdin
 from collections import deque
-from heapq import heappush, heappop
 
 input = lambda: stdin.readline().rstrip()
 
-### 너비 우선 탐색 알고리즘
 def bfs():
+    queue = deque(viruses)
+
     while queue:
-        x, y, second = queue.popleft()
-        current_virus = graph[x][y]
-        
+        x, y, virus, second = queue.popleft()
+
         if second >= S:
             break
-        
-        ### 상하좌우 탐색
+
         for dx, dy in zip(dxs, dys):
             nx = x + dx
             ny = y + dy
-            
-            ### 범위를 벗어나는 경우
-            if nx < 0 or nx >= N or ny < 0 or ny >= N:
+
+            if not (0 <= nx < N and 0 <= ny < N):
                 continue
-            elif graph[nx][ny] == 0:
-                graph[nx][ny] = current_virus
-                queue.append((nx, ny, second + 1))
-                
+            if graph[nx][ny] == 0:
+                graph[nx][ny] = virus
+                queue.append((nx, ny, virus, second + 1))
+
+    return graph[X - 1][Y - 1]
+
 N, K = map(int, input().split())
 graph = [list(map(int, input().split())) for _ in range(N)]
 S, X, Y = map(int, input().split())
+
 dxs = [-1, 1, 0, 0]
 dys = [0, 0, -1, 1]
-initial_virus = []
-queue = deque()
+viruses = []
 
-### 초기 상태의 바이러스 좌표를 우선순위 큐에 저장
 for x in range(N):
     for y in range(N):
-        virus = graph[x][y]
-        
-        if virus > 0:
-            heappush(initial_virus, (virus, x, y))
+        if graph[x][y] > 0:
+            viruses.append((x, y, graph[x][y], 0))
 
-### 바이러스 번호가 작은 순으로 바이러스 좌표를 큐에 저장          
-while initial_virus:
-    virus, x, y = heappop(initial_virus)
-    queue.append((x, y, 0))
-            
-### 너비 우선 탐색 실행
-bfs()
-    
-print(graph[X - 1][Y - 1])
+viruses = sorted(viruses, key=lambda x: x[2])
+
+print(bfs())
