@@ -2,15 +2,7 @@ def reverse_direction(string: str) -> str:
     if string == "":
         return string
     else:
-        reversed_string = ""
-        
-        for char in string:
-            if char == "(":
-                reversed_string += ")"
-            else:
-                reversed_string += "("
-                
-        return reversed_string
+        return "".join(map(lambda x: ")" if x == "(" else "(", string))
     
 def is_correct(string: str) -> bool:
     count = 0
