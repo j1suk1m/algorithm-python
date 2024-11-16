@@ -1,6 +1,4 @@
-from sys import stdin
 from itertools import permutations
-
 
 def solution(k, dungeons):
     answer = -1
