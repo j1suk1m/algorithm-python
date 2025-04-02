@@ -1,26 +1,29 @@
 from sys import stdin
 
 input = lambda: stdin.readline().rstrip()
-minimum = 0
-maximum = 11
+
+lower_bound = 1
+upper_bound = 10
 
 while True:
-    number = int(input())
+    question_number = int(input())
     
-    if number == 0:
+    ### 종료 조건
+    if question_number == 0:
         break
-    else:
-        response = input()
+
+    answer = input()
         
-        if response == "too high":
-            maximum = min(maximum, number);
-        elif response == "too low":
-            minimum = max(minimum, number);
-        elif minimum < number and number < maximum:
+    if answer == "too high":
+        upper_bound = min(upper_bound, question_number - 1); ### 상한 갱신
+    elif answer == "too low":
+        lower_bound = max(lower_bound, question_number + 1); ### 하한 갱신
+    else: ### 상한 및 하한이 유효한 범위인지 확인
+        if lower_bound <= question_number and question_number <= upper_bound:
             print("Stan may be honest")
-            minimum = 0
-            maximum = 11
-        else:
+        else: 
             print("Stan is dishonest")
-            minimum = 0
-            maximum = 11
+        
+        ### 다음 게임을 위해 상한 및 하한 초기화
+        lower_bound = 1
+        upper_bound = 10
